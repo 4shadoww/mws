@@ -15,7 +15,8 @@ config = {
   "scripts": [],
   "ignored_scripts": [],
   "tests": [],
-  "ignored_tests": []
+  "ignored_tests": [],
+  "throttle": 5
 }
 
 def merge_config(to_config, from_config):

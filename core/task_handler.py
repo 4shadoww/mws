@@ -2,6 +2,7 @@ import logging
 import threading
 import importlib
 import time
+import datetime
 import traceback
 
 from core import config_loader
@@ -79,18 +80,23 @@ def page_saver(save_pages, killer):
   while not killer.kill:
     # Check is pages available
     if len(save_pages) > 0:
+      start_time = datetime.datetime.utcnow()
       try:
         # Save page
         api.save_page(save_pages[0].title, save_pages[0].text, save_pages[0].comment, basetimestamp=save_pages[0].basetimestamp, minor=save_pages[0].minor)
         with save_lock:
           # Delete saved page from pages to be saved list
           del save_pages[0]
+        time_now = datetime.datetime.utcnow()
+        time_to_throttle = config_loader.config["throttle"] - (time_now - start_time).seconds
+        if time_to_throttle > 0:
+          time.sleep(time_to_throttle)
       except:
         logger.critical("cannot save page %s" % save_pages[0].title)
         logger.critical(traceback.format_exc())
       continue
 
-    time.sleep(1)
+    time.sleep(0.1)
 
 def create_comment(comments):
   full_comment = u""
