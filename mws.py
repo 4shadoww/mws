@@ -67,7 +67,7 @@ def run_given_task(args):
   if args.pages_file:
     with open(args.pages_file, "r") as pages_file:
       for line in pages_file:
-        if(not line.empty()): pages.append(line)
+        if(not line.isspace()): pages.append(line)
 
   if len(config_loader.config["tests"]) > 0:
     task_handler.run(pages, run_tests=True)
