@@ -68,6 +68,7 @@ def page_loader(load_pages, loaded_pages, killer):
     # Get text
     textts = api.get_text(page)
     if not textts:
+      logger.error("page %s not found" % page)
       continue
     # Add to loaded pages
     with load_lock:

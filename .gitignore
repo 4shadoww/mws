@@ -4,3 +4,4 @@ mws.json
 __pycache__
 /logs
 /test.py
+/sendtoserver.sh
