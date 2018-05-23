@@ -65,6 +65,7 @@ def run_given_task(args):
   pages = args.pages
   # Read pages from file
   if args.pages_file:
+    pages = []
     with open(args.pages_file, "r") as pages_file:
       for line in pages_file:
         if(not line.isspace()): pages.append(line)
