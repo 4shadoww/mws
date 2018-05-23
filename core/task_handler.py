@@ -171,7 +171,7 @@ def run(pages, run_tests=False):
             if passed:
               logger.info("page %s passed test %s" % (page.title, test))
             else:
-              logger.info("warning: page %s didn't pass test %s" % (page.title, test))
+              logger.error("warning: page %s didn't pass test %s" % (page.title, test))
           
           logger.info("tests done")
 
@@ -205,11 +205,11 @@ def run(pages, run_tests=False):
       # Sleep
       time.sleep(0.01)
     
-    if len(save_pages) > 0:
+    if not config_loader.config["test"] and not run_tests and len(save_pages) > 0:
       logger.info("saving pages")
 
     # Wait pages to be saved
-    while(len(save_pages) > 0):
+    while(not config_loader.config["test"] and not run_tests and len(save_pages) > 0):
       time.sleep(0.1)
     # Done kill threads
     killer.kill = True
