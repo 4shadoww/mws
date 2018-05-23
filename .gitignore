@@ -1,0 +1,6 @@
+.vscode
+user_config.py
+mws.json
+__pycache__
+/logs
+/test.py
