@@ -36,6 +36,7 @@ def get_text(title):
     "prop": "revisions",
     "titles": title,
     "rvprop": "content|timestamp",
+    "rvslots": "main"
   }
   query = session.session.get(params)["query"]["pages"]
   for pageid in query:
@@ -43,7 +44,7 @@ def get_text(title):
       return False
     if "revisions" not in query[pageid]:
       return False
-    return (query[pageid]["revisions"][0]["*"], query[pageid]["revisions"][0]["timestamp"])
+    return (query[pageid]["revisions"][0]["slots"]["main"]["*"], query[pageid]["revisions"][0]["timestamp"])
 
   return False
 
