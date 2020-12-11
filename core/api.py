@@ -9,56 +9,56 @@ from core import session
 logger = logging.getLogger("infolog")
 
 def parameter_maker(values):
-  if type(values) != list:
-    return values
+    if type(values) != list:
+        return values
 
-  final_str = ""
-  for i in range(len(values)):
-    final_str += str(values[i])
+    final_str = ""
+    for i in range(len(values)):
+        final_str += str(values[i])
 
-    if i < len(values) - 1:
-      final_str += "|"
+        if i < len(values) - 1:
+            final_str += "|"
 
-  return final_str
+    return final_str
 
 
 def get_token(token_type):
-  params = {
-    "action": "query",
-    "meta": "tokens",
-    "type": parameter_maker(token_type)
-  }
-  return session.session.get(params)["query"]["tokens"]
+    params = {
+        "action": "query",
+        "meta": "tokens",
+        "type": parameter_maker(token_type)
+    }
+    return session.session.get(params)["query"]["tokens"]
 
 def get_text(title):
-  params = {
-    "action": "query",
-    "prop": "revisions",
-    "titles": title,
-    "rvprop": "content|timestamp",
-    "rvslots": "main"
-  }
-  query = session.session.get(params)["query"]["pages"]
-  for pageid in query:
-    if pageid == "-1":
-      return False
-    if "revisions" not in query[pageid]:
-      return False
-    return (query[pageid]["revisions"][0]["slots"]["main"]["*"], query[pageid]["revisions"][0]["timestamp"])
+    params = {
+        "action": "query",
+        "prop": "revisions",
+        "titles": title,
+        "rvprop": "content|timestamp",
+        "rvslots": "main"
+    }
+    query = session.session.get(params)["query"]["pages"]
+    for pageid in query:
+        if pageid == "-1":
+            return False
+        if "revisions" not in query[pageid]:
+            return False
+        return (query[pageid]["revisions"][0]["slots"]["main"]["*"], query[pageid]["revisions"][0]["timestamp"])
 
-  return False
+    return False
 
 def save_page(title, text, comment, basetimestamp=None, minor=False):
-  params = {
-    "action": "edit",
-    "title": title,
-    "text": text,
-    "summary": comment,
-    "minor": minor,
-    "bot": True,
-    "token": get_token(["csrf"])["csrftoken"]
-  }
-  if basetimestamp:
-    params["basetimestamp"] = basetimestamp
-  session.session.post(params)
-  return True
+    params = {
+        "action": "edit",
+        "title": title,
+        "text": text,
+        "summary": comment,
+        "minor": minor,
+        "bot": True,
+        "token": get_token(["csrf"])["csrftoken"]
+    }
+    if basetimestamp:
+        params["basetimestamp"] = basetimestamp
+    session.session.post(params)
+    return True
