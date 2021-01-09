@@ -25,6 +25,7 @@ def setup_argparser():
     parser.add_argument("--pages-file", "-pf", help="load pages to be checked from file", required=False)
     parser.add_argument("--config-file", "-cf", help="set configuration file path", required=False)
     parser.add_argument("--scripts", "-s", help="scripts to be runned (overwrites configuration file's list)", required=False, nargs='+')
+    parser.add_argument("--test-file", "-tf", help="load test article from file", required=False, nargs='+')
     parser.add_argument("--ignored-scripts", "-is", help="scripts to be ignored", required=False, nargs='+')
     parser.add_argument("--review", "-r", help="show diff before saving", required=False, action="store_true")
     parser.add_argument("--test", "-t", help="don't save changes", required=False, action="store_true")
@@ -70,6 +71,9 @@ def run_given_task(args):
             for line in pages_file:
                 if(not line.isspace()): pages.append(line.rstrip())
 
+    elif args.test_file:
+        pages = [""]
+
     if len(config_loader.config["tests"]) > 0:
         task_handler.run(pages, run_tests=True)
     else:
@@ -104,7 +108,7 @@ def main():
         if args.ignored_tests:
             config_loader.config["ignored_tests"] = args.ignored_tests
 
-        if not args.pages and not args.pages_file:
+        if not args.pages and not args.pages_file and not args.test_file:
             sys.stderr.write("error: no pages or pages file\n")
             parser.print_help()
             sys.exit(1)
@@ -123,10 +127,13 @@ def main():
         # Save ignored scripts
         if args.ignored_scripts:
             config_loader.config["ignored_scripts"] = args.ignored_scripts
-        elif not args.tests and    not args.scripts:
+        elif not args.tests and not args.scripts:
             print("no scripts given")
             parser.print_help()
             sys.exit(1)
+        # Save test file
+        if args.test_file:
+            config_loader.config["test_file"] = args.test_file[0]
         # Create logging directory
         try:
             os.makedirs(config_loader.config["log_directory"])

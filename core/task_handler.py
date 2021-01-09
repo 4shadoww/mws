@@ -38,6 +38,9 @@ class Page:
     def set_minor(self, minor):
         self.minor = minor
 
+    def set_zero(self, zero):
+        self.zero_edit = zero
+
 class holder:
     kill = False
 
@@ -64,6 +67,13 @@ def load_scripts():
     return objects
 
 def page_loader(load_pages, loaded_pages, killer):
+    # Load test page from file
+    if config_loader.config["test_file"] and config_loader.config["test_file"] != "":
+        f = open(config_loader.config["test_file"], 'r')
+        loaded_pages.append(Page("test", f.read(), '0'))
+        f.close()
+        return
+
     for page in load_pages:
         # If kill if KeyboardInterrupt received
         if killer.kill: return
@@ -143,7 +153,7 @@ def run(pages, run_tests=False):
         pl.start()
         threads.append(pl)
         # Check is test mode enabled
-        if not config_loader.config["test"] and not run_tests:
+        if (not config_loader.config["test"] and not run_tests) or config_loader.config["test_file"]:
             # Pages to be saved
             save_pages = []
             # Start page_saver
@@ -162,6 +172,7 @@ def run(pages, run_tests=False):
                 logger.info("checking: %s" % page.title)
                 with load_lock:
                     del loaded_pages[0]
+
                 for script in scripts:
                     error_count = script.run(page)
 
@@ -170,6 +181,9 @@ def run(pages, run_tests=False):
                         comments.append(script.comment1)
                     else:
                         comments.append(script.comment0)
+
+                    if error_count > 0 and not script.zero_edit:
+                        page.zero_edit = False
 
                 # Run tests mode
                 if run_tests:
@@ -182,7 +196,7 @@ def run(pages, run_tests=False):
 
                     logger.info("tests done")
 
-                elif page.text != oldtext:
+                elif page.text != oldtext and not (not config_loader.config["allow_zero"] and page.zero_edit):
                     page.comment = create_comment(comments)
                     page.minor = config_loader.config["minor"]
 

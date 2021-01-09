@@ -1,6 +1,12 @@
+import re
 from core import script
+from core import utilities as util
 
 class Algo(script.Script):
+    comment0 = "yksikkö"
+    comment1 = "monikko"
 
-  def run(self, page):
-    return self.error_count
+    zero_edit = True
+
+    def run(self, page):
+        return self.error_count
