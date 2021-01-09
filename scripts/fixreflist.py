@@ -1,10 +1,20 @@
 import re
+
 from core import script
 from core import utilities as util
+from core import warnings as war
 
 class Algo(script.Script):
     comment0 = "yksikkö"
     comment1 = "monikko"
+
+    comment00 = "lisäsi puuttuvan \"Viitteet\" -osion"
+    comment01 = "lisäsi puuttuvan \"Viitteet\" -mallineen"
+    comment02 = "lisäsi puuttuvan \"Lähteet\" -osion"
+    comment03 = "siirsi \"Viitteet\" -osion oikeaan kohtaan"
+
+    warning00 = "siirretty vain otsikko"
+    warning01 = "tagi ilman loppua"
 
     zero_edit = True
 
@@ -24,10 +34,10 @@ class Algo(script.Script):
         feed = util.listend(text, util.getword("srcs"), srclist, nono)
 
         if util.tagwithoutend('\n'.join(text[feed[0]:feed[1]])):
-            warning(self.warnings[config.lang+"01"])
+            war.append_warning(self.warning01)
 
         if feed[0] == feed[1]:
-            warning(self.warnings[config.lang+"00"])
+            war.append_warning(self.warning00)
 
         if feed[1] != None and feed[2] == False:
             self.error_count += 1
@@ -37,7 +47,7 @@ class Algo(script.Script):
                 nl00 = ""
             text[feed[0]] = text[feed[0]]+nl00+"{{"+util.getword("refs")+"}}"
             text = '\n'.join(text)
-            self.comments[config.lang+"0"] = self.comments[config.lang+"01"]
+            self.comment0 = self.comment01
 
         elif feed[1] != None and feed[2]:
             nl0 = "\n"
@@ -51,7 +61,7 @@ class Algo(script.Script):
 
             text[feed[1]] = text[feed[1]]+"\n\n"+"==="+util.getword("refs")+"===\n"+"{{"+util.getword("refs")+"}}"+nl1
             text = '\n'.join(text)
-            self.comments[config.lang+"0"] = self.comments[config.lang+"00"]
+            self.comment0 = self.comment00
 
         return text
 
@@ -95,7 +105,7 @@ class Algo(script.Script):
 
         text = '\n'.join(text)
         self.error_count += 1
-        self.comments[config.lang+"0"] = self.comments[config.lang+"02"]
+        self.comment0 = self.comment02
 
         return text
 
@@ -104,7 +114,7 @@ class Algo(script.Script):
         text = text.split("\n")
         text[line] = text[line]+"\n{{"+util.getword("refs")+"}}"
         self.error_count += 1
-        self.comments[config.lang+"0"] = self.comments[config.lang+"01"]
+        self.comment0 = self.comment01
         text = '\n'.join(text)
         return text
 
@@ -126,7 +136,7 @@ class Algo(script.Script):
         feed0 = util.listend('\n'.join(text), util.getword("refs"), srclist, nono)
 
         if feed0[0] == feed0[1]:
-            warning(self.warnings[config.lang+"00"])
+            war.append_warning(self.warning00)
 
         refsec = '\n'.join(text[feed0[0]:feed0[1]+1])
 
@@ -138,10 +148,10 @@ class Algo(script.Script):
         feed = util.listend('\n'.join(text), util.getword("srcs"), srclist, nono)
 
         if util.tagwithoutend('\n'.join(text[feed[0]:feed[1]])):
-            warning(self.warnings[config.lang+"01"])
+            war.append_warning(self.warning01)
 
         if feed[0] == feed[1]:
-            warning(self.warnings[config.lang+"00"])
+            war.append_warning(self.warning00)
 
         if feed[1] != None:
             nl0 = "\n"
@@ -150,7 +160,7 @@ class Algo(script.Script):
 
             text[feed[1]] = text[feed[1]]+nl0+refsec+"\n"+nl1
             text = '\n'.join(text)
-            self.comments[config.lang+"0"] = self.comments[config.lang+"03"]
+            self.comment0 = self.comment03
         return text
 
     def run(self, page):

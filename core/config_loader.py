@@ -17,6 +17,10 @@ config = {
     "ignored_scripts": [],
     "tests": [],
     "ignored_tests": [],
+    "pre_war_modules": [],
+    "ignored_pre_war_modules": [],
+    "war_modules": [],
+    "ignored_war_modules": [],
     "throttle": 5
 }
 
