@@ -33,7 +33,7 @@ class Warning(warningbase.Warningbase):
         return length
 
     def run(self, text):
-        self.wm["fi"] = "osion siirto tuottaa ongelmia"
+        self.wm = "osion siirto tuottaa ongelmia"
         text = text.split("\n")
         secs = self.getsec(text)
 

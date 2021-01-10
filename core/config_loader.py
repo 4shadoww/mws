@@ -3,6 +3,11 @@ import os
 
 from core import path
 
+algorithms = ["brfix",
+               "centerfix", "smallfix", "titlechanger",
+               "textinen", "seealsotoexl", "twovlines", "reftosrc", "titlelevel",
+               "refstemp", "fix2brackets",  "fixpiped", "fixreflist", "replacecomms", "replacesrc", "replaceseealso", "replaceli",]
+
 config = {
     "lang": "en",
     "enable_log": True,
@@ -13,13 +18,13 @@ config = {
     "log_directory": "logs",
     "site": "http://127.0.0.1",
     "api_path": "/api.php",
-    "scripts": [],
+    "scripts": algorithms,
     "ignored_scripts": [],
     "tests": [],
     "ignored_tests": [],
-    "pre_war_modules": [],
+    "pre_war_modules": ["notvalidsec"],
     "ignored_pre_war_modules": [],
-    "war_modules": [],
+    "war_modules": ["refsec", "secorder", "srcsrefsec", "danreftemp", "titlewithoutcontent", "level3srcs", "catnotbelow", "toomanyrefs", "comments"],
     "ignored_war_modules": [],
     "throttle": 5
 }

@@ -6,7 +6,7 @@ class Algo(script.Script):
     comment0 = "korjasi center tagin syntaksin"
     comment1 = "korjasi center tagien syntaksit"
 
-    zero_edit = True
+    zero_edit = False
 
     def run(self, page):
         errorlist = re.findall(r"\<.*?\>", page.text)

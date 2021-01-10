@@ -2,7 +2,7 @@ import re
 
 from core import script
 from core import utilities as util
-from core import warnings as war
+from core import warning_handler as war
 
 class Algo(script.Script):
     comment0 = "yksikkö"
@@ -16,7 +16,7 @@ class Algo(script.Script):
     warning00 = "siirretty vain otsikko"
     warning01 = "tagi ilman loppua"
 
-    zero_edit = True
+    zero_edit = False
 
     def addrefs0(self, text, article):
         srclist = ["*", "{{IMDb-h", "#",
@@ -173,10 +173,10 @@ class Algo(script.Script):
             page.text = self.addrefs3(page.text, article)
 
         if "<ref>" not in page.text and "</ref>" not in page.text:
-            return page.text, self.error_count
+            return self.error_count
 
         if util.andop(nono, page.text):
-            return page.text, self.error_count
+            return self.error_count
 
         elif util.titlein(util.getword("refs"), page.text) and util.titlein(util.getword("srcs"), page.text) and "{{"+util.getword("refs") not in page.text and "{{"+util.getwordlc("refs") not in page.text:
             page.text = self.addrefs2(page.text, article)

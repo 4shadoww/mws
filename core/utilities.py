@@ -23,43 +23,33 @@ def istag(tag, data):
 
 def getword(id, lang=None):
     if lang == None:
-        wl = config_loader.config["lang"]
-        return wl[id]
+        return words[config_loader.config["lang"]][id]
 
-    wl = globals()[lang]
-    return wl[id]
+    return words[lang][id]
 
 def getwordlc(id, lang=None):
     if lang == None:
-        wl = config_loader.config["lang"]
-        return wl[id].lower()
+        return words[config_loader.config["lang"]][id].lower()
 
-    wl = globals()[lang]
-    return wl[id].lower()
+    return words[lang][id].lower()
 
 def getwordlcc(id, lang=None):
     if lang == None:
-        wl = config_loader.config["lang"]
-        return wl[id].lower()+":"
+        return words[config_loader.config["lang"]][id].lower()+":"
 
-    wl = globals()[lang]
-    return wl[id].lower()+":"
+    return words[lang][id].lower()+":"
 
 def getwordulc(id, lang=None):
     if lang == None:
-        wl = config_loader.config["lang"]
-        return wl[id], wl[id].lower()
+        return words[config_loader.config["lang"]][id], words[config_loader.config["lang"]][id].lower()
 
-    wl = globals()[lang]
-    return wl[id], wl[id].lower()
+    return words[lang][id], words[lang][id].lower()
 
 def getwordc(id, lang=None):
     if lang == None:
-        wl = config_loader.config["lang"]
-        return wl[id]+":"
+        return words[config_loader.config["lang"]][id]+":"
 
-    wl = globals()[lang]
-    return wl[id]+":"
+    return words[lang][id]+":"
 
 def titlein(title, text):
     titles = re.findall(r"\=.*\=", text)

@@ -9,6 +9,7 @@ from core import config_loader
 from core import api
 from core.lang import lang
 from core import adiffer
+from core import warning_handler as warmgr
 
 # Get logger
 logger = logging.getLogger("infolog")
@@ -143,6 +144,9 @@ def run(pages, run_tests=False):
     if run_tests:
         tests = load_tests()
 
+    # Load warnings
+    warmgr.init()
+
     try:
         logger.info("loading scripts")
         # Load scripts
@@ -175,11 +179,10 @@ def run(pages, run_tests=False):
 
                 for script in scripts:
                     error_count = script.run(page)
-
                     # Add comment
-                    if error_count > 1:
+                    if error_count == 1:
                         comments.append(script.comment1)
-                    else:
+                    elif error_count > 1:
                         comments.append(script.comment0)
 
                     if error_count > 0 and not script.zero_edit:
@@ -200,10 +203,20 @@ def run(pages, run_tests=False):
                     page.comment = create_comment(comments)
                     page.minor = config_loader.config["minor"]
 
+                    if not config_loader.config["review"]:
+                        warmgr.precheck(oldtext)
+                        warmgr.check(page.text)
+                        warmgr.print_warnings()
+
                     # Review mode
                     if config_loader.config["review"]:
                         adiffer.show_diff(oldtext, page.text)
                         print("summary:", page.comment)
+
+                        warmgr.precheck(oldtext)
+                        warmgr.check(page.text)
+                        warmgr.print_warnings()
+
                         answer = input("do you agree these changes [y/N] ")
 
                         if answer.lower() == "p":

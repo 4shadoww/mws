@@ -3,7 +3,6 @@ import importlib
 
 from core import config_loader
 
-
 # Init warning modules
 waralgs = []
 
@@ -17,24 +16,23 @@ logger = logging.getLogger("infolog")
 
 
 def init():
-
     for war in config_loader.config["war_modules"]:
         if war not in config_loader.config["ignored_war_modules"]:
-            module = importlib.import_module("warnings." + war)
+            module = importlib.import_module("warscripts." + war)
             waralgs.append(module.Warning())
 
     for war in config_loader.config["pre_war_modules"]:
         if war not in config_loader.config["ignored_pre_war_modules"]:
-            module = importlib.import_module("warnings." + war)
+            module = importlib.import_module("warscripts." + war)
             prealgs.append(module.Warning())
 
 
-def check(page):
+def check(text):
     warnings = False
 
     for warmeth in waralgs:
         warmeth.__init__()
-        error_count = warmeth.run(page)
+        error_count = warmeth.run(text)
         if error_count > 0:
             warnings = True
             logger.critical("warning: " + warmeth.wm)
@@ -42,15 +40,15 @@ def check(page):
     return warnings
 
 
-def precheck(page):
+def precheck(text):
     warnings = False
 
     for warmeth in prealgs:
         warmeth.__init__()
-        error_count = warmeth.run(page)
+        error_count = warmeth.run(text)
         if error_count > 0:
             warnings = True
-            logger.critical("warning: " + warmeth.wm)
+            logger.critical("pre warning: " + warmeth.wm)
 
     return warnings
 

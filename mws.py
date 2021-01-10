@@ -120,14 +120,14 @@ def main():
         # Save scripts
         if args.scripts:
             config_loader.config["scripts"] = args.scripts
-        elif not args.tests:
+        elif not args.tests and (not config_loader.config["scripts"] or config_loader.config["scripts"] == []):
             print("no scripts given")
             parser.print_help()
             sys.exit(1)
         # Save ignored scripts
         if args.ignored_scripts:
             config_loader.config["ignored_scripts"] = args.ignored_scripts
-        elif not args.tests and not args.scripts:
+        elif not args.tests and not args.scripts and (not config_loader.config["scripts"] or config_loader.config["scripts"] == []):
             print("no scripts given")
             parser.print_help()
             sys.exit(1)
