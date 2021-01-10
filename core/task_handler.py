@@ -10,6 +10,7 @@ from core import api
 from core.lang import lang
 from core import adiffer
 from core import warning_handler as warmgr
+from core import comment_parser
 
 # Get logger
 logger = logging.getLogger("infolog")
@@ -140,6 +141,8 @@ def run(pages, run_tests=False):
     threads = []
     # Loaded pages
     loaded_pages = []
+    # Comment parser
+    comp = comment_parser.Commentparser()
 
     if run_tests:
         tests = load_tests()
@@ -177,6 +180,8 @@ def run(pages, run_tests=False):
                 with load_lock:
                     del loaded_pages[0]
 
+                page.text = comp.hide_comments(page.text)
+
                 for script in scripts:
                     error_count = script.run(page)
                     # Add comment
@@ -187,6 +192,9 @@ def run(pages, run_tests=False):
 
                     if error_count > 0 and not script.zero_edit:
                         page.zero_edit = False
+
+                page.text = comp.restore_comments(page.text)
+                comp.clear()
 
                 # Run tests mode
                 if run_tests:
