@@ -9,7 +9,7 @@ class Commentparser:
         return len(self.data_holder)
 
     def commentid(self, string):
-        return "COMMENT_ID="+self.unid()
+        return "COMMENT_ID="+str(self.unid())
 
     def endat(self, string, ending):
         if string.endswith(ending):

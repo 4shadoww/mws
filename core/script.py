@@ -10,5 +10,8 @@ class Script:
     comment0 = "edit"
     comment1 = "edit"
 
+    def __init__(self):
+        self.error_count = 0
+
     def run(self, page):
         return self.error_count

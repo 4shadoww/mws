@@ -40,7 +40,7 @@ class Algo(script.Script):
             war.append_warning(self.warning00)
 
         if feed[1] != None and feed[2] == False:
-            self.error_count += 1
+            self.error_count = 1
             text = text.split("\n")
             nl00 = "\n"
             if text[feed[0]] == "":
@@ -52,7 +52,7 @@ class Algo(script.Script):
         elif feed[1] != None and feed[2]:
             nl0 = "\n"
             nl1 = ""
-            self.error_count += 1
+            self.error_count = 1
             text = text.split("\n")
             if text[feed[1]] != "":
                 nl0 = "\n\n"
@@ -104,7 +104,7 @@ class Algo(script.Script):
             text[pos] = text[pos]+nl+"\n=="+util.getword("srcs")+"==\n{{"+util.getword("refs")+"}}\n"
 
         text = '\n'.join(text)
-        self.error_count += 1
+        self.error_count = 1
         self.comment0 = self.comment02
 
         return text
@@ -113,7 +113,7 @@ class Algo(script.Script):
         line = util.titleline(util.getword("refs"), text)
         text = text.split("\n")
         text[line] = text[line]+"\n{{"+util.getword("refs")+"}}"
-        self.error_count += 1
+        self.error_count = 1
         self.comment0 = self.comment01
         text = '\n'.join(text)
         return text
@@ -156,7 +156,7 @@ class Algo(script.Script):
         if feed[1] != None:
             nl0 = "\n"
             nl1 = "\n"
-            self.error_count += 1
+            self.error_count = 1
 
             text[feed[1]] = text[feed[1]]+nl0+refsec+"\n"+nl1
             text = '\n'.join(text)

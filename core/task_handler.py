@@ -70,7 +70,7 @@ def load_scripts():
 
 def page_loader(load_pages, loaded_pages, killer):
     # Load test page from file
-    if config_loader.config["test_file"] and config_loader.config["test_file"] != "":
+    if "test_file" in config_loader.config and config_loader.config["test_file"] != "":
         f = open(config_loader.config["test_file"], 'r')
         loaded_pages.append(Page("test", f.read(), '0'))
         f.close()
@@ -160,7 +160,7 @@ def run(pages, run_tests=False):
         pl.start()
         threads.append(pl)
         # Check is test mode enabled
-        if (not config_loader.config["test"] and not run_tests) or config_loader.config["test_file"]:
+        if (not config_loader.config["test"] and not run_tests) or "test_file" in config_loader.config:
             # Pages to be saved
             save_pages = []
             # Start page_saver
@@ -183,12 +183,14 @@ def run(pages, run_tests=False):
                 page.text = comp.hide_comments(page.text)
 
                 for script in scripts:
+                    script.__init__()
                     error_count = script.run(page)
                     # Add comment
                     if error_count == 1:
-                        comments.append(script.comment1)
-                    elif error_count > 1:
                         comments.append(script.comment0)
+                    elif error_count > 1:
+                        print(script)
+                        comments.append(script.comment1)
 
                     if error_count > 0 and not script.zero_edit:
                         page.zero_edit = False

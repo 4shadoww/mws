@@ -8,7 +8,7 @@ logger = logging.getLogger("infolog")
 
 class Algo(script.Script):
     comment0 = "poisti wikipedian sisäisestä linkistä tekstin jossa se on sama kuin linkki"
-    comment1 = "monikkopoisti wikipedian sisäisistä linkeistä tekstin joissa se on sama kuin linkki"
+    comment1 = "poisti wikipedian sisäisistä linkeistä tekstin joissa se on sama kuin linkki"
 
     zero_edit = False
 

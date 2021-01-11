@@ -12,6 +12,8 @@ class Algo(script.Script):
     zero_edit = False
 
     def run(self, page):
+        error = 0
+
         page.textlist = page.text.split('\n')
 
         for l, line in enumerate(page.textlist):
@@ -22,12 +24,12 @@ class Algo(script.Script):
             if util.getword("refs") in matches[0] and util.titlein(util.getword("srcs"), page.text) and matches[0].count("=") <= 4:
                 page.textlist[l] = "===Viitteet==="
                 error = 0
-                self.error_count += 1
+                self.error_count = 1
 
             elif util.getword("refs") in matches[0] and util.titlein(util.getword("srcs"), page.text) == False:
                 page.textlist[l] = "==Lähteet=="
                 error = 1
-                self.error_count += 1
+                self.error_count = 1
 
         page.text = '\n'.join(page.textlist)
 

@@ -4,7 +4,7 @@ from core import utilities as util
 
 class Algo(script.Script):
     comment0 = "muutti {{viitteet}} -mallineen muotoon {{Viitteet}}"
-    comment1 = "monikko"
+    comment1 = "muutti {{viitteet}} -mallineen muotoon {{Viitteet}}"
     comment01 = "muutti {{Viitteet|sarakkeet}} -mallineen muotoon {{Viitteet}}"
 
     zero_edit = True
