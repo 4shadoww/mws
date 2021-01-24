@@ -72,7 +72,7 @@ def page_loader(load_pages, loaded_pages, killer):
     # Load test page from file
     if "test_file" in config_loader.config and config_loader.config["test_file"] != "":
         f = open(config_loader.config["test_file"], 'r')
-        loaded_pages.append(Page("test", f.read(), '0'))
+        loaded_pages.append(Page(config_loader.config["test_file"], f.read(), '0'))
         f.close()
         return
 

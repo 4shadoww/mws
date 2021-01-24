@@ -3,7 +3,7 @@ import os
 
 from core import path
 
-algorithms = ["brfix",
+algorithms = ["brfix", "boldname",
                "centerfix", "smallfix", "titlechanger",
                "textinen", "seealsotoexl", "twovlines", "reftosrc", "titlelevel",
                "refstemp", "fix2brackets",  "fixpiped", "fixreflist", "replacecomms", "replacesrc", "replaceseealso", "replaceli",]

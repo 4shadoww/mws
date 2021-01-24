@@ -13,7 +13,7 @@ class Algo(script.Script):
 
     def run(self, page):
         titles2change = [["Ulkoiset linkit", "Aiheesta muualla"], ["Ulkoiset linkit:", "Aiheesta muualla"], ["Asiasta muualla", "Aiheesta muualla"],
-        ["Lähteet:", "Lähteet"], ["lähteet:", "Lähteet"], ["Lähde:", "Lähteet"], ["Lähde", "Lähteet"], ["Lähdeviitteet", "Lähteet"], ["Viitteet:", "Viitteet"],]
+                         ["Lähteet:", "Lähteet"], ["Lähde:", "Lähteet"], ["Lähde", "Lähteet"], ["Lähdeviitteet", "Lähteet"], ["Viitteet:", "Viitteet"], ["Lähteitä", "Lähteet"]]
 
         page.text = page.text.split("\n")
         i = 0
