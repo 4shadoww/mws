@@ -313,6 +313,49 @@ def findtemplates(text):
                 end = -1
     return templates
 
+def findtemplatesindex(text):
+    templates = []
+
+    start = -1
+    end = -1
+    index = 0
+
+    for i in range(len(text)):
+        if text[i] == "{":
+            index += 1
+            if start == -1:
+                start = i
+        elif text[i] == "}":
+            index -= 1
+            if index == 0:
+                end = i
+                templates.append((start, end+1))
+                start = -1
+                end = -1
+    return templates
+
+def findlinksindex(text):
+    templates = []
+
+    start = -1
+    end = -1
+    index = 0
+
+    for i in range(len(text)):
+        if text[i] == "[":
+            index += 1
+            if start == -1:
+                start = i
+        elif text[i] == "]":
+            index -= 1
+            if index == 0:
+                end = i
+                templates.append((start, end+1))
+                start = -1
+                end = -1
+    return templates
+
+
 def remove_ending(ending, string):
     string = string.rstrip()
     if string.endswith(ending):

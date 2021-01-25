@@ -9,7 +9,7 @@ class Commentparser:
         return len(self.data_holder)
 
     def commentid(self, string):
-        return "COMMENT_ID="+str(self.unid())
+        return "__!COMMENTID"+str(self.unid())
 
     def endat(self, string, ending):
         if string.endswith(ending):
@@ -36,7 +36,8 @@ class Commentparser:
 
     def restore_comments(self, text):
         for i in self.data_holder:
-            text = text.replace(i[0], i[1])
+            print(i)
+            text = text.replace(i[0], i[1], 1)
         return text
 
     def clear(self):

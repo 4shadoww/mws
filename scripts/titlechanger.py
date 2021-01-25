@@ -12,8 +12,8 @@ class Algo(script.Script):
     zero_edit = False
 
     def run(self, page):
-        titles2change = [["Ulkoiset linkit", "Aiheesta muualla"], ["Ulkoiset linkit:", "Aiheesta muualla"], ["Asiasta muualla", "Aiheesta muualla"],
-                         ["Lähteet:", "Lähteet"], ["Lähde:", "Lähteet"], ["Lähde", "Lähteet"], ["Lähdeviitteet", "Lähteet"], ["Viitteet:", "Viitteet"], ["Lähteitä", "Lähteet"]]
+        titles2change = [["Ulkoiset linkit", "Aiheesta muualla"], ["Lisää aiheesta", "Aiheesta muualla"], ["Ulkoiset linkit:", "Aiheesta muualla"], ["Asiasta muualla", "Aiheesta muualla"],
+                         ["Lähteet:", "Lähteet"], ["Lähde:", "Lähteet"], ["Lähde", "Lähteet"], ["Lähdeviitteet", "Lähteet"], ["Viitteet:", "Viitteet"], ["Lähteitä", "Lähteet"], ["Kirjallisuus", "Kirjallisuutta"]]
 
         page.text = page.text.split("\n")
         i = 0

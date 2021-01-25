@@ -235,6 +235,10 @@ def run(pages, run_tests=False):
                             answer = input("do you agree these changes [y/N] ")
                             if not answer.lower() == "y":
                                 continue
+                        elif answer.lower() == "l":
+                            print(config_loader.config["site"]+"/wiki/"+page.title)
+                            input("press enter to continue")
+                            continue
 
                         elif not answer.lower() == "y":
                             continue

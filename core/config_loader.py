@@ -19,7 +19,7 @@ config = {
     "site": "http://127.0.0.1",
     "api_path": "/api.php",
     "scripts": algorithms,
-    "ignored_scripts": [],
+    "ignored_scripts": ["boldname"],
     "tests": [],
     "ignored_tests": [],
     "pre_war_modules": ["notvalidsec"],

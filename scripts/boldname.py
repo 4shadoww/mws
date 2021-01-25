@@ -9,9 +9,9 @@ class Algo(script.Script):
     zero_edit = False
 
     def run(self, page):
-        templates = re.finditer("{{.*?}}", page.text)
+        templates = util.findtemplatesindex(page.text) + util.findlinksindex(page.text)
         titles = re.finditer(page.title, page.text)
-        boldone = re.finditer("'{1,5}"+page.title+"'{1,5}", page.text)
+        boldone = re.finditer("'{1,5}.*?'{1,5}", page.text)
 
         for title in titles:
             in_template = False
@@ -20,8 +20,7 @@ class Algo(script.Script):
             end = title.end(0)
 
             for temp in templates:
-                if temp.start(0) < start and temp.end(0) > end:
-
+                if temp[0] < start and temp[1] > end:
                     in_template = True
                     break
 
@@ -36,7 +35,7 @@ class Algo(script.Script):
                         self.error_count += 1
                         return self.error_count
 
-            page.text = page.text[:title.start(0)] + "'''"+title.group(0)+"'''" + page.text[title.end(0):]
+            page.text = page.text[:start] + "'''"+title.group(0)+"'''" + page.text[end:]
             self.error_count += 1
             return self.error_count
    
