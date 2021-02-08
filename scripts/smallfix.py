@@ -9,14 +9,17 @@ class Algo(script.Script):
     zero_edit = False
 
     def run(self, page):
-        errorlist = re.findall(r"\<.*?\>", page.text)
+        errorlist = re.finditer(r"\<.*?small(.*?)[/\\ ]\>", page.text)
         for item in errorlist:
-            if util.istag("small", item):
-                if '/' in item and item != '</small>':
-                    page.text = page.text.replace(item, '</small>')
+            if util.istag("small", item.group(0)):
+                if '/' in item.group(0) and item.group(0) != '</small>':
+                    page.text = page.text.replace(item.group(0), '</small>')
                     self.error_count += 1
-                elif '/' not in item and item != '<small>':
-                    page.text = page.text.replace(item, '<small>')
+                elif '/' not in item.group(0) and item.group(0) != '<small>':
+                    if not item.group(1).isspace():
+                        page.text = page.text.replace(item.group(0), '<small '+item.group(1).strip()+'>')
+                    else:
+                        page.text = page.text.replace(item.group(0), '<small>')
                     self.error_count += 1
 
         return self.error_count

@@ -17,6 +17,8 @@ class Algo(script.Script):
         return False
 
     def run(self, page):
+        if "'" in page.title: return self.error_count
+
         templates = util.findtemplatesindex(page.text) + util.findlinksindex(page.text)
         titles = re.finditer(page.title, page.text)
         boldone = list(re.finditer("'{1,5}(.*?)'{1,5}", page.text))

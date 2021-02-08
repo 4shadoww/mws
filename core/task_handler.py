@@ -227,7 +227,7 @@ def run(pages, run_tests=False):
                         warmgr.check(page.text)
                         warmgr.print_warnings()
 
-                        answer = input("do you agree these changes [y/N] ")
+                        answer = input("do you agree these changes on page \"" + page.title + "\" [y/N] ")
 
                         if answer.lower() == "p":
                             print(page.text)
