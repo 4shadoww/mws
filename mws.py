@@ -146,7 +146,9 @@ def main():
 
         # Login
         session.create()
-        session.login()
+        if not session.login():
+            print("login failed")
+            sys.exit(1)
 
         run_given_task(args)
 
