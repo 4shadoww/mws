@@ -36,7 +36,6 @@ class Commentparser:
 
     def restore_comments(self, text):
         for i in self.data_holder:
-            print(i)
             text = text.replace(i[0], i[1], 1)
         return text
 
