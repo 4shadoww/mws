@@ -26,7 +26,7 @@ class Commentparser:
         for comment in comments:
             parsedcomment = self.commentid(comment)
             self.data_holder.append([parsedcomment, comment])
-            text = text.replace(comment, parsedcomment)
+            text = text.replace(comment, parsedcomment, 1)
 
         return text
 
@@ -36,6 +36,7 @@ class Commentparser:
 
     def restore_comments(self, text):
         for i in self.data_holder:
+            print(i)
             text = text.replace(i[0], i[1], 1)
         return text
 
