@@ -3,7 +3,7 @@ from core import script
 from core import utilities as util
 
 class Algo(script.Script):
-    comment0 = "lihavoi artikkelin nimen määritelmässä"
+    comment0 = "korjasi artikkelin nimen muotoilun määritelmässä"
     comment1 = "monikko"
 
     zero_edit = False
