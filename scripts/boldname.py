@@ -1,6 +1,7 @@
 import re
 from core import script
 from core import utilities as util
+from difflib import SequenceMatcher
 
 class Algo(script.Script):
     comment0 = "korjasi artikkelin nimen muotoilun määritelmässä"
@@ -10,9 +11,16 @@ class Algo(script.Script):
 
     def title_any(self, title, bold):
         title_t = title.split(' ')
-        low = bold.group(0).lower()
+        low = bold.group(0).lower().replace('\'', '')
+        low_list = low.split(' ')
+
         for i in title_t:
-            if i.lower() in low: return True
+            i_low = i.lower()
+            if i_low in low: return True
+
+            for l in low_list:
+                if SequenceMatcher(a=i_low, b=l).ratio() > 0.8:
+                    return True
 
         return False
 
